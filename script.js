@@ -17,7 +17,7 @@ function getTodos () {
 
 /*Store New Todo to Local Storage from Inputs*/
 // function storeTodo (potato) {
-	// localStorage.setItem("potato-" + potato.id, JSON.stringify(potato));
+// 	localStorage.setItem("potato-" + potato.id, JSON.stringify(potato));
 // }
 
 ////*EVENT LISTENERS*////
@@ -30,18 +30,6 @@ $('.bottom-section').on('click', '#delete-button', function(){
 	localStorage.removeItem(potatoId);
 });
 
-// 	event.preventDefault();
-// 	var todo = {
-// 		title: $('#title-input').val(),
-// 		body: $('#task-input').val(),
-// 		importance: 'swill',
-// 		id: Date.now()
-// 	}
-// 	storeTodo(todo);
-// 	newCard(todo);
-// 	clearInput();
-// });
-
 function createTodoCard (event) {
 	event.preventDefault();
 	var title = $('#title-input').val();
@@ -51,11 +39,10 @@ function createTodoCard (event) {
 	var saveButton = $('.save-button');
 	$('.bottom-section').prepend(todoCardBlueprint(theTodo));
 	Card.create(theTodo);
+  $('#title-input').val("");
+  $('#task-input').val("");
 	$('#title-input').focus();
 	saveButton.attr('disabled', false);
-	clearInput;
-
-
 }
 
 function Card(content) {
@@ -63,12 +50,10 @@ this.title = content.title;
 this.task = content.task;
 this.id = content.id || Date.now();
 this.importanceIndex = content.importanceIndex || 0;
-
 };
 
 Card.create = function(card){
 	localStorage.setItem(card.id, JSON.stringify(card));
-
 };
 
 
@@ -99,20 +84,17 @@ $('.bottom-section').on('click', '#up-vote-button', function() {
 ////*FUNCTIONS*////
 
 /*Clear Fields Function*/
-function clearInput() {
-  $('#title-input').val("");
-  $('#task-input').val("");
-}
+// function clearInput() {
+//
+// }
 
 /*Prepend New Card Function*/
 function todoCardBlueprint(todo) {
-	// var title = $('#title-input').val();
-	// var task = $('#task-input').val();
 	$(".todo-box").prepend(
 		`
 			<article id=${todo.id} class="todo-card">
-				<h3 class="todo-title">${todo.title}</h3><span id="delete-button"></span>
-				<p class="todo-task">${todo.task}</p>
+				<h3 class="todo-title" contenteditable>${todo.title}</h3><span id="delete-button"></span>
+				<p class="todo-task" contenteditable>${todo.task}</p>
 				<p class="importance"><span id="up-vote-button" class="card-button"></span>
 				<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.importance}</span></p>
 			</article>
@@ -120,5 +102,24 @@ function todoCardBlueprint(todo) {
 	);
 }
 
-
-
+// function editCardTitle(event){
+//   event.preventDefault();
+//   var articleElement = $(event.target).closest('article')
+//   var id = articleElement.prop('id');
+//   var card = Card.find(id);
+//   card.title = $(event.target).text();
+//   card.save();
+// };
+//
+// function editCardBody(event){
+//   event.preventDefault();
+//   var articleElement = $(event.target).closest('article')
+//   var id = articleElement.prop('id');
+//   var card = Card.find(id);
+//   card.task = $(event.target).text();
+//   card.save();
+// };
+//
+// Card.prototype.save = function() {
+//   Card.create(this);
+// };
