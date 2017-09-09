@@ -1,28 +1,30 @@
 <!doctype html>
-<html><head>
-	<title>IdeaBox</title>
-		<link rel="stylesheet" type="text/css" href="reset.css">
-		<link href="style.css" type="text/css" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:700" rel="stylesheet">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
+<html>
+	<head>
+		<title>ToDoBox</title>
+			<link rel="stylesheet" type="text/css" href="reset.css">
+			<link href="style.css" type="text/css" rel="stylesheet">
+			<link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:700" rel="stylesheet">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
 
-<body>
-	<section class="top-section">
-		<h1 class="idea-box-header"><span class="idea-header">idea</span>box</h1>
-		<form>
-			<input type="text" class="main-inputs" id="title-input" name="Title" placeholder="Title">
-			<input type="text" class="main-inputs" id="body-input" name="Body" placeholder="Body">
-			<input class="save-button main-inputs" type="submit" name="Save" value="save">
-		</form>
-	</section>
-
-	<section class="bottom-section">
-		<input class="search-bar main-inputs" type="text" name="Search" placeholder="Search">
-		<section class="idea-box">
+	<body>
+		<section class="top-section">
+			<h1 class="todo-box-header"><span class="todo-header">ToDo</span>Box</h1>
+			<form>
+				<input type="text" class="main-inputs" id="title-input" name="Title" placeholder="Title">
+				<input type="text" class="main-inputs" id="task-input" name="Task" placeholder="Task">
+				<input class="save-button main-inputs" type="submit" name="Save" value="save">
+			</form>
 		</section>
-	</section>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script type="text/javascript" src="script.js"></script>
-</body>
+
+			<input class="search-bar main-inputs" type="text" name="Search" placeholder="Search">
+
+		<section class="bottom-section">
+			<section class="todo-box">
+			</section>
+		</section>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="script.js"></script>
+	</body>
 </html>

@@ -1,22 +1,22 @@
 ////*ON LOAD TRIGGERS*////
 $(document).ready(function() {
-    console.log(localStorage);
-    getIdeas();
+    // console.log(localStorage);
+    getTodos();
 });
 
 ////*LOCAL STORAGE FUNCTIONS*////
 
-/*Pull Saved Ideas from Local Storage*/
-function getIdeas () {
+/*Pull Saved Todos from Local Storage*/
+function getTodos () {
 	for(var i in localStorage) {
-		var oldIdea = localStorage[i];
-		var parsedIdea = JSON.parse(oldIdea);
-		newCard(parsedIdea);
+		var oldTodo = localStorage[i];
+		var parsedTodo = JSON.parse(oldTodo);
+		newCard(parsedTodo);
 	}
 }
 
-/*Store New Idea to Local Storage from Inputs*/
-function storeIdea (potato) {
+/*Store New Todo to Local Storage from Inputs*/
+function storeTodo (potato) {
 	localStorage.setItem("potato-" + potato.id, JSON.stringify(potato));
 }
 
@@ -32,28 +32,28 @@ $('.bottom-section').on('click', '#delete-button', function(){
 
 $('.save-button').on('click', function(event){
 	event.preventDefault();
-	var idea = {
+	var todo = {
 		title: $('#title-input').val(),
-		body: $('#body-input').val(),
-		quality: 'swill',
+		body: $('#task-input').val(),
+		importance: 'swill',
 		id: Date.now()
 	}
-	storeIdea(idea);
-	newCard(idea);
+	storeTodo(todo);
+	newCard(todo);
 	clearInput();
 });
 
 /*Down Vote Button*/
 $('.bottom-section').on('click', '#down-vote-button', function() {
-	var $qualitySpan = $(this).siblings('.idea-rank');
-	$qualitySpan.text(changeRank('down',$qualitySpan.text()));
+	var $importanceSpan = $(this).siblings('.todo-importance');
+	$importanceSpan.text(changeRank('down',$importanceSpan.text()));
 })
 
 /*Search Evebnt Listener*/
 $('.search-bar').on('keyup', function(){
 	var userInput = $(this).val();
-	$('.idea-card').each(function(index, card){
-		if ($(this).children('.idea-title').text().toLowerCase().includes(userInput.toLowerCase()) || $(this).children('.idea-body').text().toLowerCase().includes(userInput.toLowerCase())) {
+	$('.todo-card').each(function(index, card){
+		if ($(this).children('.todo-title').text().toLowerCase().includes(userInput.toLowerCase()) || $(this).children('.todo-task').text().toLowerCase().includes(userInput.toLowerCase())) {
 			$(this).show()
 		} else {
 			$(this).hide()
@@ -63,8 +63,8 @@ $('.search-bar').on('keyup', function(){
 
 /*Up Vote Button*/
 $('.bottom-section').on('click', '#up-vote-button', function() {
-	var $qualitySpan = $(this).siblings('.idea-rank');
-	$qualitySpan.text(changeRank('up',$qualitySpan.text()));
+	var $importanceSpan = $(this).siblings('.todo-importance');
+	$importanceSpan.text(changeRank('up',$importanceSpan.text()));
 })
 
 ////*FUNCTIONS*////
@@ -72,19 +72,19 @@ $('.bottom-section').on('click', '#up-vote-button', function() {
 /*Clear Fields Function*/
 function clearInput() {
   $('#title-input').val("");
-  $('#body-input').val("");
+  $('#task-input').val("");
 }
 
 /*Prepend New Card Function*/
-function newCard(idea) {
-	$(".idea-box").prepend( `
-		<article id=${idea.id} class="idea-card">
-			<h3 class="idea-title">${idea.title}<span id="delete-button"></span></h3>
-			<p class="idea-body">
-				${idea.body}
+function newCard(todo) {
+	$(".todo-box").prepend( `
+		<article id=${todo.id} class="todo-card">
+			<h3 class="todo-title">${todo.title}<span id="delete-button"></span></h3>
+			<p class="todo-task">
+				${todo.body}
 			</p>
-			<p class="quality"><span id="up-vote-button" class="card-button"></span>
-			<span id="down-vote-button" class="card-button"></span>quality: <span class="idea-rank">${idea.quality}</span></p>
+			<p class="importance"><span id="up-vote-button" class="card-button"></span>
+			<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.importance}</span></p>
 		</article>
 		`
 	);
@@ -109,11 +109,11 @@ function changeRank(direction, currentRank) {
 // localStorage.getItem(myObject.id)
 // v
 
-//To save old ideas:
-//First needs to look at localStorage to see if there are ideas.
-//If ideas are present, they are shown in lower half, represented as cards.
+//To save old Todos:
+//First needs to look at localStorage to see if there are Todos.
+//If Todos are present, they are shown in lower half, represented as cards.
 
-//For new idea:
+//For new Todo:
 //Get input from user: Title and the Body.
 //Make a new card with those values.
 //When card is created, it needs a unique value, based on when card when
