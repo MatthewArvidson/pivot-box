@@ -6,19 +6,19 @@ body {
 	width: 100%;
 }
 
-h1, h3, .quality {
+h1, h3, .importance {
 	color: #6D6E71;
 	font-family: 'Roboto Slab', Georgia, serif;
 }
 
 /*Top Section*/
-.idea-box-header {
+.todo-box-header {
 	font-size: 42px;
 	margin: 0 auto;
 	text-align: center;
 }
 
-.idea-header {
+.todo-header {
 	color: #00A79D;
 }
 
@@ -87,27 +87,27 @@ article {
 	margin-right: 20px;
 }
 
-.idea-body {
+.todo-task {
 	color: #939598;
 	font-size: 17px;
 	line-height: 130%;
 	margin: 20px 5px;
 }
 
-.idea-card {
+.todo-card {
 	border-bottom: 2px solid #D1D3D4;
 }
 
-.idea-rank {
+.todo-importance {
 	margin-left: 0.3em;
 }
 
-.idea-title {
+.todo-title {
 	font-size: 24px;
 	margin: 20px 2px;
 }
 
-.quality {
+.importance {
 	align-items: center;
 	display: flex;
 	margin: 25px 5px;
