@@ -1,6 +1,6 @@
+$('.save-button').on('click', createTodoCard);
 ////*ON LOAD TRIGGERS*////
 $(document).ready(function() {
-    // console.log(localStorage);
     getTodos();
 });
 
@@ -11,14 +11,14 @@ function getTodos () {
 	for(var i in localStorage) {
 		var oldTodo = localStorage[i];
 		var parsedTodo = JSON.parse(oldTodo);
-		newCard(parsedTodo);
+		todoCardBlueprint(parsedTodo);
 	}
 }
 
 /*Store New Todo to Local Storage from Inputs*/
-function storeTodo (potato) {
-	localStorage.setItem("potato-" + potato.id, JSON.stringify(potato));
-}
+// function storeTodo (potato) {
+	// localStorage.setItem("potato-" + potato.id, JSON.stringify(potato));
+// }
 
 ////*EVENT LISTENERS*////
 
@@ -30,18 +30,47 @@ $('.bottom-section').on('click', '#delete-button', function(){
 	localStorage.removeItem(potatoId);
 });
 
-$('.save-button').on('click', function(event){
+// 	event.preventDefault();
+// 	var todo = {
+// 		title: $('#title-input').val(),
+// 		body: $('#task-input').val(),
+// 		importance: 'swill',
+// 		id: Date.now()
+// 	}
+// 	storeTodo(todo);
+// 	newCard(todo);
+// 	clearInput();
+// });
+
+function createTodoCard (event) {
 	event.preventDefault();
-	var todo = {
-		title: $('#title-input').val(),
-		body: $('#task-input').val(),
-		importance: 'swill',
-		id: Date.now()
-	}
-	storeTodo(todo);
-	newCard(todo);
-	clearInput();
-});
+	var title = $('#title-input').val();
+	var task = $('#task-input').val();
+	var theTodo = new Card({title, task});
+	console.log(theTodo);
+	var saveButton = $('.save-button');
+	$('.bottom-section').prepend(todoCardBlueprint(theTodo));
+	Card.create(theTodo);
+	$('#title-input').focus();
+	saveButton.attr('disabled', false);
+	clearInput;
+
+
+}
+
+function Card(content) {
+this.title = content.title;
+this.task = content.task;
+this.id = content.id || Date.now();
+this.importanceIndex = content.importanceIndex || 0;
+
+};
+
+Card.create = function(card){
+	localStorage.setItem(card.id, JSON.stringify(card));
+
+};
+
 
 /*Down Vote Button*/
 $('.bottom-section').on('click', '#down-vote-button', function() {
@@ -49,7 +78,7 @@ $('.bottom-section').on('click', '#down-vote-button', function() {
 	$importanceSpan.text(changeRank('down',$importanceSpan.text()));
 })
 
-/*Search Evebnt Listener*/
+/*Search Event Listener*/
 $('.search-bar').on('keyup', function(){
 	var userInput = $(this).val();
 	$('.todo-card').each(function(index, card){
@@ -76,46 +105,20 @@ function clearInput() {
 }
 
 /*Prepend New Card Function*/
-function newCard(todo) {
-	$(".todo-box").prepend( `
-		<article id=${todo.id} class="todo-card">
-			<h3 class="todo-title">${todo.title}<span id="delete-button"></span></h3>
-			<p class="todo-task">
-				${todo.body}
-			</p>
-			<p class="importance"><span id="up-vote-button" class="card-button"></span>
-			<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.importance}</span></p>
-		</article>
+function todoCardBlueprint(todo) {
+	// var title = $('#title-input').val();
+	// var task = $('#task-input').val();
+	$(".todo-box").prepend(
+		`
+			<article id=${todo.id} class="todo-card">
+				<h3 class="todo-title">${todo.title}</h3><span id="delete-button"></span>
+				<p class="todo-task">${todo.task}</p>
+				<p class="importance"><span id="up-vote-button" class="card-button"></span>
+				<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.importance}</span></p>
+			</article>
 		`
 	);
 }
 
-/*Change Rank Up/Down Function*/
-function changeRank(direction, currentRank) {
-	var rankArray = ['swill', 'plausible', 'genius'];
-	var increment = direction === 'down'? -1:1;
-	var currentIndex = rankArray.indexOf(currentRank);
-	if (currentRank + increment < 0 || currentRank + increment > rankArray.length - 1) {
-		return rankArray[currentIndex];
-	} else {
-		return rankArray[currentIndex + increment];
-	};
-}
 
-////////////NOTES////////////
 
-// localStorage.setItem('ID Local Storage Knows', myObject);
-// Date.now()
-// localStorage.getItem(myObject.id)
-// v
-
-//To save old Todos:
-//First needs to look at localStorage to see if there are Todos.
-//If Todos are present, they are shown in lower half, represented as cards.
-
-//For new Todo:
-//Get input from user: Title and the Body.
-//Make a new card with those values.
-//When card is created, it needs a unique value, based on when card when
-//card was created and/or content of card.
-//Pass unique value created to localStorage to pull from.
