@@ -1,4 +1,5 @@
 $('.save-button').on('click', createTodoCard);
+$('.todo-box').on('keyup', '.todo-title', editTitle)
 ////*ON LOAD TRIGGERS*////
 $(document).ready(function() {
     getTodos();
@@ -111,14 +112,31 @@ function todoCardBlueprint(todo) {
 	$(".todo-box").prepend(
 		`
 			<article id=${todo.id} class="todo-card">
-				<h3 class="todo-title">${todo.title}</h3><span id="delete-button"></span>
-				<p class="todo-task">${todo.task}</p>
+				<h3 class="todo-title" contenteditable>${todo.title}</h3><span id="delete-button"></span>
+				<p class="todo-task" contenteditable>${todo.task}</p>
 				<p class="importance"><span id="up-vote-button" class="card-button"></span>
 				<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.importance}</span></p>
 			</article>
 		`
 	);
-}
+};
+
+function editTitle (event) {
+var id = ($(this).closest('.todo-card').attr('id'));
+var uniqueTodo = JSON.parse(localStorage.getItem(id));
+if (event.keyCode === 13) {
+	event.preventDefault();
+	this.blur();
+	
+
+};
+
+uniqueTodo.title = $(this).text();
+localStorage.setItem(id, JSON.stringify(uniqueTodo));
+
+};
+
+
 
 
 
