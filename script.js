@@ -7,6 +7,8 @@ $('.save-button').on('click', createTodoCard);
 $('.todo-box').on('keyup', '.todo-title', editTitle);
 $('.todo-box').on('keyup', '.todo-task', editTask);
 $('.todo-box').on('click', '#delete-button', deleteButton);
+$('.todo-box').on('click', '#up-vote-button', voteUp);
+$('.todo-box').on('click', '#down-vote-button', voteDown);
 
 ////*FUNCTIONS*////
 
@@ -31,7 +33,6 @@ function createTodoCard (event) {
 	var title = $('#title-input').val();
 	var task = $('#task-input').val();
 	var theTodo = new Card({title, task});
-	console.log(theTodo);
 	var saveButton = $('.save-button');
 	$('.bottom-section').prepend(todoCardBlueprint(theTodo));
 	Card.create(theTodo);
@@ -52,13 +53,6 @@ Card.create = function(card){
 	localStorage.setItem(card.id, JSON.stringify(card));
 };
 
-
-//Down Vote Button
-// $('.bottom-section').on('click', '#down-vote-button', function() {
-// 	var $importanceSpan = $(this).siblings('.todo-importance');
-// 	$importanceSpan.text(changeRank('down',$importanceSpan.text()));
-// });
-
 //Search Event Listener
 $('.search-bar').on('keyup', function(){
 	var userInput = $(this).val();
@@ -70,13 +64,6 @@ $('.search-bar').on('keyup', function(){
 		}
 	})
 });
-
-//Up Vote Button
-// $('.bottom-section').on('click', '#up-vote-button', function() {
-// 	var $importanceSpan = $(this).siblings('.todo-importance');
-// 	$importanceSpan.text(changeRank('up',$importanceSpan.text()));
-// });
-
 
 //Prepend New Card Function
 function todoCardBlueprint(todo) {
@@ -91,6 +78,7 @@ function todoCardBlueprint(todo) {
 		`
 	);
 };
+
 
 //Edit Title
 function editTitle (event) {
@@ -115,3 +103,88 @@ if (event.keyCode === 13) {
   uniqueTodo.task = $(this).text();
   localStorage.setItem(id, JSON.stringify(uniqueTodo));
 };
+
+function voteUp(event) {
+  event.preventDefault();
+  var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
+  var articleElement = $(event.target).closest('article');
+  var id = articleElement.prop('id');
+  var card = Card.find(id);
+  var uniqueTodo = JSON.parse(localStorage.getItem(id));
+  articleElement.find('.todo-importance').text(card.getImportance());
+  card.incrementImportance();
+  localStorage.setItem(id, JSON.stringify(uniqueTodo));
+  card.save();
+};
+
+function voteDown(event) {
+  event.preventDefault();
+  var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
+  var articleElement = $(event.target).closest('article');
+  var id = articleElement.prop('id');
+  var card = Card.find(id);
+  var uniqueTodo = JSON.parse(localStorage.getItem(id));
+  articleElement.find('.todo-importance').text(card.getImportance());
+  card.decrementImportance();
+  localStorage.setItem(id, JSON.stringify(uniqueTodo));
+  card.save();
+};
+
+Card.prototype.getImportance = function() {
+  var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
+  return importanceArray[this.importanceIndex];
+};
+
+Card.prototype.incrementImportance = function() {
+  var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
+  if (this.importanceIndex !== importanceArray.length - 1) {
+    this.importanceIndex += 1;
+  }
+};
+
+Card.prototype.decrementImportance = function() {
+  var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
+  if (this.importanceIndex !== 0) {
+    this.importanceIndex -= 1;
+  }
+};
+
+//Save Card
+Card.prototype.save = function() {
+  Card.create(this);
+};
+
+//Find Card
+Card.find = function(id) {
+  return new Card(JSON.parse(localStorage.getItem(id)));
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Down Vote Button
+// $('.bottom-section').on('click', '#down-vote-button', function() {
+// 	var $importanceSpan = $(this).siblings('.todo-importance');
+// 	$importanceSpan.text(changeRank('down',$importanceSpan.text()));
+// });
+
+//Up Vote Button
+// $('.bottom-section').on('click', '#up-vote-button', function() {
+// 	var $importanceSpan = $(this).siblings('.todo-importance');
+// 	$importanceSpan.text(changeRank('up',$importanceSpan.text()));
+// });
