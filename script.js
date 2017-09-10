@@ -1,37 +1,31 @@
+////*ON LOAD TRIGGERS*////
+$(document).ready(function() {
+  getTodos();
+});
+//Event Listeners
 $('.save-button').on('click', createTodoCard);
 $('.todo-box').on('keyup', '.todo-title', editTitle);
 $('.todo-box').on('keyup', '.todo-task', editTask);
-////*ON LOAD TRIGGERS*////
-$(document).ready(function() {
-    getTodos();
-});
+$('.todo-box').on('click', '#delete-button', deleteButton);
 
-////*LOCAL STORAGE FUNCTIONS*////
+////*FUNCTIONS*////
 
 /*Pull Saved Todos from Local Storage*/
-function getTodos () {
+function getTodos() {
 	for(var i in localStorage) {
 		var oldTodo = localStorage[i];
 		var parsedTodo = JSON.parse(oldTodo);
 		todoCardBlueprint(parsedTodo);
 	}
-}
+};
 
-/*Store New Todo to Local Storage from Inputs*/
-// function storeTodo (potato) {
-// 	localStorage.setItem("potato-" + potato.id, JSON.stringify(potato));
-// }
+//Delete Card Button
+function deleteButton() {
+	$(this).closest('.todo-card').remove();
+  localStorage.removeItem(($(this).closest('.todo-card').attr('id')));
+};
 
-////*EVENT LISTENERS*////
-
-/*Delete Card Button*/
-$('.bottom-section').on('click', '#delete-button', function(){
-	$(this).closest('article').remove();
-	var getId = $(this).closest('article').attr('id');
-	var potatoId = 'potato-' + getId;
-	localStorage.removeItem(potatoId);
-});
-
+//Create Todo Card
 function createTodoCard (event) {
 	event.preventDefault();
 	var title = $('#title-input').val();
@@ -45,7 +39,7 @@ function createTodoCard (event) {
   $('#task-input').val("");
 	$('#title-input').focus();
 	saveButton.attr('disabled', false);
-}
+};
 
 function Card(content) {
 this.title = content.title;
@@ -59,13 +53,13 @@ Card.create = function(card){
 };
 
 
-/*Down Vote Button*/
-$('.bottom-section').on('click', '#down-vote-button', function() {
-	var $importanceSpan = $(this).siblings('.todo-importance');
-	$importanceSpan.text(changeRank('down',$importanceSpan.text()));
-})
+//Down Vote Button
+// $('.bottom-section').on('click', '#down-vote-button', function() {
+// 	var $importanceSpan = $(this).siblings('.todo-importance');
+// 	$importanceSpan.text(changeRank('down',$importanceSpan.text()));
+// });
 
-/*Search Event Listener*/
+//Search Event Listener
 $('.search-bar').on('keyup', function(){
 	var userInput = $(this).val();
 	$('.todo-card').each(function(index, card){
@@ -77,20 +71,14 @@ $('.search-bar').on('keyup', function(){
 	})
 });
 
-/*Up Vote Button*/
-$('.bottom-section').on('click', '#up-vote-button', function() {
-	var $importanceSpan = $(this).siblings('.todo-importance');
-	$importanceSpan.text(changeRank('up',$importanceSpan.text()));
-})
+//Up Vote Button
+// $('.bottom-section').on('click', '#up-vote-button', function() {
+// 	var $importanceSpan = $(this).siblings('.todo-importance');
+// 	$importanceSpan.text(changeRank('up',$importanceSpan.text()));
+// });
 
-////*FUNCTIONS*////
 
-/*Clear Fields Function*/
-// function clearInput() {
-//
-// }
-
-/*Prepend New Card Function*/
+//Prepend New Card Function
 function todoCardBlueprint(todo) {
 	$(".todo-box").prepend(
 		`
@@ -104,6 +92,7 @@ function todoCardBlueprint(todo) {
 	);
 };
 
+//Edit Title
 function editTitle (event) {
 var id = ($(this).closest('.todo-card').attr('id'));
 var uniqueTodo = JSON.parse(localStorage.getItem(id));
@@ -115,6 +104,7 @@ if (event.keyCode === 13) {
   localStorage.setItem(id, JSON.stringify(uniqueTodo));
 };
 
+//Edit Task
 function editTask (event) {
 var id = ($(this).closest('.todo-card').attr('id'));
 var uniqueTodo = JSON.parse(localStorage.getItem(id));
