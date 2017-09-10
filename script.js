@@ -1,5 +1,6 @@
 $('.save-button').on('click', createTodoCard);
-$('.todo-box').on('keyup', '.todo-title', editTitle)
+$('.todo-box').on('keyup', '.todo-title', editTitle);
+$('.todo-box').on('keyup', '.todo-task', editTask);
 ////*ON LOAD TRIGGERS*////
 $(document).ready(function() {
     getTodos();
@@ -109,35 +110,18 @@ var uniqueTodo = JSON.parse(localStorage.getItem(id));
 if (event.keyCode === 13) {
 	event.preventDefault();
 	this.blur();
-	
-
+  };
+  uniqueTodo.title = $(this).text();
+  localStorage.setItem(id, JSON.stringify(uniqueTodo));
 };
 
-uniqueTodo.title = $(this).text();
-localStorage.setItem(id, JSON.stringify(uniqueTodo));
-
+function editTask (event) {
+var id = ($(this).closest('.todo-card').attr('id'));
+var uniqueTodo = JSON.parse(localStorage.getItem(id));
+if (event.keyCode === 13) {
+	event.preventDefault();
+	this.blur();
+  };
+  uniqueTodo.task = $(this).text();
+  localStorage.setItem(id, JSON.stringify(uniqueTodo));
 };
-
-
-
-// function editCardTitle(event){
-//   event.preventDefault();
-//   var articleElement = $(event.target).closest('article')
-//   var id = articleElement.prop('id');
-//   var card = Card.find(id);
-//   card.title = $(event.target).text();
-//   card.save();
-// };
-//
-// function editCardBody(event){
-//   event.preventDefault();
-//   var articleElement = $(event.target).closest('article')
-//   var id = articleElement.prop('id');
-//   var card = Card.find(id);
-//   card.task = $(event.target).text();
-//   card.save();
-// };
-//
-// Card.prototype.save = function() {
-//   Card.create(this);
-// };
