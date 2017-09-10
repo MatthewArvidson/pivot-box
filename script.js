@@ -1,4 +1,5 @@
 $('.save-button').on('click', createTodoCard);
+$('.todo-box').on('keyup', '.todo-title', editTitle)
 ////*ON LOAD TRIGGERS*////
 $(document).ready(function() {
     getTodos();
@@ -100,7 +101,24 @@ function todoCardBlueprint(todo) {
 			</article>
 		`
 	);
-}
+};
+
+function editTitle (event) {
+var id = ($(this).closest('.todo-card').attr('id'));
+var uniqueTodo = JSON.parse(localStorage.getItem(id));
+if (event.keyCode === 13) {
+	event.preventDefault();
+	this.blur();
+	
+
+};
+
+uniqueTodo.title = $(this).text();
+localStorage.setItem(id, JSON.stringify(uniqueTodo));
+
+};
+
+
 
 // function editCardTitle(event){
 //   event.preventDefault();
