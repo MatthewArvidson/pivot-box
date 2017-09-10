@@ -73,7 +73,7 @@ function todoCardBlueprint(todo) {
 				<h3 class="todo-title" contenteditable>${todo.title}</h3><span id="delete-button"></span>
 				<p class="todo-task" contenteditable>${todo.task}</p>
 				<p class="importance"><span id="up-vote-button" class="card-button"></span>
-				<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.importance}</span></p>
+				<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.importanceIndex}</span></p>
 			</article>
 		`
 	);
