@@ -67,13 +67,16 @@ $('.search-bar').on('keyup', function(){
 
 //Prepend New Card Function
 function todoCardBlueprint(todo) {
+  //When you go to blueprint the card, in localStorage, the object has importanceIndex (not importance)
+  //so you need to find a way to relate the index to the actual value (i.e. if index 2, value is 'normal') and this is what you put into the card
+
 	$(".todo-box").prepend(
 		`
 			<article id=${todo.id} class="todo-card">
 				<h3 class="todo-title" contenteditable>${todo.title}</h3><span id="delete-button"></span>
 				<p class="todo-task" contenteditable>${todo.task}</p>
 				<p class="importance"><span id="up-vote-button" class="card-button"></span>
-				<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.importance}</span></p>
+				<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.importanceIndex}</span></p>
 			</article>
 		`
 	);
@@ -111,10 +114,13 @@ function voteUp(event) {
   var id = articleElement.prop('id');
   var card = Card.find(id);
   var uniqueTodo = JSON.parse(localStorage.getItem(id));
+  console.log('unique todo in voteUp', uniqueTodo);
+
   articleElement.find('.todo-importance').text(card.getImportance());
   card.incrementImportance();
   localStorage.setItem(id, JSON.stringify(uniqueTodo));
   card.save();
+    console.log('saved card in voteUp', card)
 };
 
 function voteDown(event) {
@@ -124,18 +130,24 @@ function voteDown(event) {
   var id = articleElement.prop('id');
   var card = Card.find(id);
   var uniqueTodo = JSON.parse(localStorage.getItem(id));
+  console.log('unique todo in voteDown', uniqueTodo);
   articleElement.find('.todo-importance').text(card.getImportance());
   card.decrementImportance();
   localStorage.setItem(id, JSON.stringify(uniqueTodo));
   card.save();
+  console.log('saved card in voteDown', card)
 };
 
 Card.prototype.getImportance = function() {
+  console.log('importance index in getImportance', this.importanceIndex);
+
   var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
   return importanceArray[this.importanceIndex];
 };
 
 Card.prototype.incrementImportance = function() {
+  console.log('importance index in increment', this.importanceIndex)
+
   var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
   if (this.importanceIndex !== importanceArray.length - 1) {
     this.importanceIndex += 1;
@@ -143,6 +155,8 @@ Card.prototype.incrementImportance = function() {
 };
 
 Card.prototype.decrementImportance = function() {
+  console.log('importance index in decrement', this.importanceIndex)
+
   var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
   if (this.importanceIndex !== 0) {
     this.importanceIndex -= 1;
