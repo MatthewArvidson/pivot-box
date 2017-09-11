@@ -1,4 +1,4 @@
-////*ON LOAD TRIGGERS*////
+// *ON LOAD TRIGGERS*//
 $(document).ready(function() {
   getTodos();
 });
@@ -13,13 +13,36 @@ $('.todo-box').on('click', '#down-vote-button', voteDown);
 ////*FUNCTIONS*////
 
 /*Pull Saved Todos from Local Storage*/
+
 function getTodos() {
-	for(var i in localStorage) {
-		var oldTodo = localStorage[i];
-		var parsedTodo = JSON.parse(oldTodo);
-		todoCardBlueprint(parsedTodo);
-	}
+  for (var i = 0; i < localStorage.length; i++) {
+    todoCardBlueprint(JSON.parse(localStorage.getItem(localStorage.key(i))));
+  };
 };
+
+// function getTodos() {
+//     for(var i in localStorage) {
+//         var oldTodo = localStorage[i];
+//     var newTodoCard = new Card(JSON.parse(localStorage.getItem(oldTodo)));
+//         todoCardBlueprint(newTodoCard);
+//     }
+// };
+//
+// function getTodos() {
+//     for(var i in localStorage) {
+//     var oldTodo = localStorage[i];
+//     var newTodoCard = new Card(JSON.parse(oldTodo));
+//         todoCardBlueprint(newTodoCard);
+//     }
+// };
+
+// function getTodos() {
+// 	for(var i in localStorage) {
+// 		var oldTodo = localStorage[i];
+// 		var parsedTodo = JSON.parse(oldTodo);
+// 		todoCardBlueprint(parsedTodo);
+// 	}
+// };
 
 //Delete Card Button
 function deleteButton() {
@@ -46,7 +69,9 @@ function Card(content) {
 this.title = content.title;
 this.task = content.task;
 this.id = content.id || Date.now();
-this.importanceIndex = content.importanceIndex || 0;
+this.importanceIndex = 2;
+this.importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
+this.todoQuality = this.importanceArray[this.importanceIndex];
 };
 
 Card.create = function(card){
@@ -76,7 +101,7 @@ function todoCardBlueprint(todo) {
 				<h3 class="todo-title" contenteditable>${todo.title}</h3><span id="delete-button"></span>
 				<p class="todo-task" contenteditable>${todo.task}</p>
 				<p class="importance"><span id="up-vote-button" class="card-button"></span>
-				<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.importanceIndex}</span></p>
+				<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.todoQuality}</span></p>
 			</article>
 		`
 	);
@@ -107,35 +132,26 @@ if (event.keyCode === 13) {
   localStorage.setItem(id, JSON.stringify(uniqueTodo));
 };
 
-function voteUp(event) {
-  event.preventDefault();
-  var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
-  var articleElement = $(event.target).closest('article');
-  var id = articleElement.prop('id');
-  var card = Card.find(id);
-  var uniqueTodo = JSON.parse(localStorage.getItem(id));
-  console.log('unique todo in voteUp', uniqueTodo);
-
-  articleElement.find('.todo-importance').text(card.getImportance());
-  card.incrementImportance();
-  localStorage.setItem(id, JSON.stringify(uniqueTodo));
-  card.save();
-    console.log('saved card in voteUp', card)
+function voteUp() {
+  var articleId = $(this).closest('article').prop('id');
+  var parsedObject = find(articleId);
+  if (parsedObject.importanceIndex === parsedObject.importanceArray.length - 1) {return;};
+  parsedObject.importanceIndex++;
+  parsedObject.importanceIndex = parsedObject.importanceIndex;
+  parsedObject.todoQuality = parsedObject.importanceArray[parsedObject.importanceIndex];
+  saveTodo(articleId, parsedObject);
+  $(this).siblings('.todo-importance').text(parsedObject.importanceArray[parsedObject.importanceIndex]);
 };
 
 function voteDown(event) {
-  event.preventDefault();
-  var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
-  var articleElement = $(event.target).closest('article');
-  var id = articleElement.prop('id');
-  var card = Card.find(id);
-  var uniqueTodo = JSON.parse(localStorage.getItem(id));
-  console.log('unique todo in voteDown', uniqueTodo);
-  articleElement.find('.todo-importance').text(card.getImportance());
-  card.decrementImportance();
-  localStorage.setItem(id, JSON.stringify(uniqueTodo));
-  card.save();
-  console.log('saved card in voteDown', card)
+  var articleId = $(this).closest('article').prop('id');
+  var parsedObject = find(articleId);
+  if (parsedObject.importanceIndex === 0) {return;};
+  parsedObject.importanceIndex--;
+  parsedObject.importanceIndex = parsedObject.importanceIndex;
+  parsedObject.todoQuality = parsedObject.importanceArray[parsedObject.importanceIndex];
+  saveTodo(articleId, parsedObject);
+  $(this).siblings('.todo-importance').text(parsedObject.importanceArray[parsedObject.importanceIndex]);
 };
 
 Card.prototype.getImportance = function() {
@@ -145,34 +161,41 @@ Card.prototype.getImportance = function() {
   return importanceArray[this.importanceIndex];
 };
 
-Card.prototype.incrementImportance = function() {
-  console.log('importance index in increment', this.importanceIndex)
-
-  var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
-  if (this.importanceIndex !== importanceArray.length - 1) {
-    this.importanceIndex += 1;
-  }
-};
-
-Card.prototype.decrementImportance = function() {
-  console.log('importance index in decrement', this.importanceIndex)
-
-  var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
-  if (this.importanceIndex !== 0) {
-    this.importanceIndex -= 1;
-  }
-};
+// Card.prototype.incrementImportance = function() {
+//   console.log('importance index in increment', this.importanceIndex)
+//
+//   var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
+//   if (this.importanceIndex !== importanceArray.length - 1) {
+//     this.importanceIndex += 1;
+//   }
+// };
+//
+// Card.prototype.decrementImportance = function() {
+//   console.log('importance index in decrement', this.importanceIndex)
+//
+//   var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
+//   if (this.importanceIndex !== 0) {
+//     this.importanceIndex -= 1;
+//   }
+// };
 
 //Save Card
-Card.prototype.save = function() {
-  Card.create(this);
-};
+// Card.prototype.save = function() {
+//   Card.create(this);
+// };
+
+function saveTodo(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
 
 //Find Card
-Card.find = function(id) {
-  return new Card(JSON.parse(localStorage.getItem(id)));
-};
+// Card.find = function(id) {
+//   return new Card(JSON.parse(localStorage.getItem(id)));
+// };
 
+function find(id) {
+  return JSON.parse(localStorage.getItem(id));
+}
 
 
 
