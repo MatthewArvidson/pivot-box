@@ -206,7 +206,7 @@ $('.todo-box').on('click', '.completed', completeTask);
 
 function completeTitle (){
   var completeTitle = $(this).closest('.todo-card').find('.todo-title').toggleClass('completed-task');
-  var completeTodo = JSON.parse(localStorage.getItem(id));
+  
 }
 
 function completeTask (){
