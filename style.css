@@ -130,9 +130,12 @@ article {
 	background-image: url(images/upvote-hover.svg);
 }
 
-.completed-task {
+.completed-task h3,
+.completed-task p {
 	text-decoration-line: line-through;
 }
+
+
 
 /*Media Queries*/
 @media screen and (max-width:1100px) {
