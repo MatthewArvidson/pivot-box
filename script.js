@@ -102,7 +102,7 @@ function todoCardBlueprint(todo) {
 				<p class="todo-task" contenteditable>${todo.task}</p>
 				<p class="importance"><span id="up-vote-button" class="card-button"></span>
 
-				<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.todoQuality}</span></
+				<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.todoQuality}</span><button class="completed">Completed Task</button>
 		
 			</article>
 		`
@@ -132,6 +132,7 @@ if (event.keyCode === 13) {
   };
   uniqueTodo.task = $(this).text();
   localStorage.setItem(id, JSON.stringify(uniqueTodo));
+
 };
 
 function voteUp() {
@@ -199,6 +200,18 @@ function find(id) {
   return JSON.parse(localStorage.getItem(id));
 }
 
+$('.todo-box').on('click', '.completed', completeTitle);
+$('.todo-box').on('click', '.completed', completeTask);
+
+
+function completeTitle (){
+  var completeTitle = $(this).closest('.todo-card').find('.todo-title').toggleClass('completed-task');
+  var completeTodo = JSON.parse(localStorage.getItem(id));
+}
+
+function completeTask (){
+  var completeTask = $(this).closest('.todo-card').find('.todo-task').toggleClass('completed-task');
+}
 
 
 
