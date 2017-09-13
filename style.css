@@ -135,7 +135,76 @@ article {
 	text-decoration-line: line-through;
 }
 
+h3 {
+	font-size: 20px;
+	display: flex;
+	width: 405px;
+	margin: 20px auto 30px auto;
+}
 
+.buttons {
+	color: white;
+	border: none;
+	font-size: 20px;
+	margin: 0 0 20px 0;
+}
+
+#todo-card-buttons {
+	width: 600px;
+	display: flex;
+	margin: auto;
+	justify-content: space-between;
+}
+
+#show-all-btn {
+	background-color: #00A79D;
+}
+
+#show-all-btn:hover {
+
+}
+
+#none-btn {
+	color: white;
+	background-color: grey;
+}
+
+#none-btn:hover {
+
+}
+
+#low-btn {
+	color: white;
+	background-color: blue;
+}
+
+#low-btn:hover {
+
+}
+
+#normal-btn {
+	background-color: green;
+}
+
+#normal-btn:hover {
+
+}
+
+#high-btn {
+	background-color: orange;
+}
+
+#high-btn:hover {
+
+}
+
+#critical-btn {
+	background-color: red;
+}
+
+#critical-btn:hover {
+	background-color: red;
+}
 
 /*Media Queries*/
 @media screen and (max-width:1100px) {

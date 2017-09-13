@@ -14,6 +14,9 @@ $('.todo-box').on('click', '#down-vote-button', voteDown);
 $('.filter-bar').on('keyup', search);
 $('#show-all-btn').on('click', showComplete);
 $('#none-btn').on('click', showNone);
+$('#none-btn').on('click', showNone);
+$('#low-btn').on('click', showLow);
+$('#normal-btn').on('click', showNormal)
 $('#high-btn').on('click', showHigh);
 $('#critical-btn').on('click', showCritical);
 
@@ -87,13 +90,6 @@ function showComplete () {
   $('.completed-task').show()
 }
 
-
-
-$('#none-btn').on('click', showNone);
-$('#low-btn').on('click', showLow);
-$('#normal-btn').on('click', showNormal)
-
-
 function showNone () {
   var none = $('.todo-card');
   none.each(function(){
@@ -103,11 +99,7 @@ function showNone () {
       $(this).hide()
     };
   });
-
 };
-
-  
-}
 
 function showLow () {
   var low = $('.todo-card');
@@ -117,7 +109,6 @@ function showLow () {
     } else {
       $(this).hide()
     }
-
   });
 }
 
@@ -131,10 +122,6 @@ function showNormal () {
     }
   });
 }
-// 
-//
-
-
 
 function showHigh () {
   var none = $('.todo-card');
@@ -157,8 +144,6 @@ function showCritical () {
     };
   });
 };
-
-
 
 //Prepend New Card Function
 function todoCardBlueprint(todo) {
