@@ -1,6 +1,7 @@
 //**ON LOAD TRIGGERS**
 $(document).ready(function() {
   getTodos();
+  $('.completed-task').hide();
 });
 
 //**Event Listeners**
@@ -11,6 +12,7 @@ $('.todo-box').on('click', '#delete-button', deleteButton);
 $('.todo-box').on('click', '#up-vote-button', voteUp);
 $('.todo-box').on('click', '#down-vote-button', voteDown);
 $('.filter-bar').on('keyup', search);
+
 
 //**FUNCTIONS**
 
@@ -68,9 +70,34 @@ Card.create = function(card){
 		}
 	})
 };
+$('#show-all-btn').on('click', showComplete);
 
-$('.filter-bar').on()
-// if complete task checked hide card if not show card
+function showComplete () {
+  console.log('stuff')
+//   if (todo.completeTodo = true) {
+//     $(this).show()
+//   }   else {
+//     $(this).hide()
+//     console.log(showComplete)
+//   }
+
+  $('.completed-task').show()
+}
+
+$('#none-btn').on('click', showNone);
+
+function showNone () {
+  var none = $('.todo-card');
+  console.log(none)
+  none.each(function(){
+    console.log($(this).children('.importance').children('.todo-importance').text());
+
+  })
+  
+}
+// 
+//
+
 
 
 //on page load show non-completed tasks//
@@ -164,5 +191,5 @@ function completeTodo (){
   var parsedObject = find(articleId);
   parsedObject.completeTodo = !parsedObject.completeTodo;
   saveTodo(articleId, parsedObject);
-  console.log();
+  
 };
