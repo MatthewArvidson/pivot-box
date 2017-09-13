@@ -20,7 +20,6 @@ $('#normal-btn').on('click', showNormal)
 $('#high-btn').on('click', showHigh);
 $('#critical-btn').on('click', showCritical);
 
-
 //**FUNCTIONS**
 
 //Pull Saved Todos from Local Storage
@@ -79,14 +78,6 @@ Card.create = function(card){
 };
 
 function showComplete () {
-  console.log('stuff')
-//   if (todo.completeTodo = true) {
-//     $(this).show()
-//   }   else {
-//     $(this).hide()
-//     console.log(showComplete)
-//   }
-
   $('.completed-task').show()
 }
 
