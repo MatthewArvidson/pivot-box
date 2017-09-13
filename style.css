@@ -135,10 +135,22 @@ article {
 	text-decoration-line: line-through;
 }
 
+.completed {
+	color: white;
+	border: none;
+	font-size: 20px;
+	margin: 0 0 0 20px;
+	background-color: grey;
+}
+
+.completed:hover {
+	background-color: lightgrey;
+}
+
 h3 {
 	font-size: 20px;
 	display: flex;
-	width: 405px;
+	width: 455px;
 	margin: 20px auto 30px auto;
 }
 
@@ -150,18 +162,18 @@ h3 {
 }
 
 #todo-card-buttons {
-	width: 600px;
+	width: 577px;
 	display: flex;
 	margin: auto;
 	justify-content: space-between;
 }
 
 #show-all-btn {
-	background-color: #00A79D;
+	background-color: #045E55;
 }
 
 #show-all-btn:hover {
-
+	background-color: #00A79D;
 }
 
 #none-btn {
@@ -170,16 +182,16 @@ h3 {
 }
 
 #none-btn:hover {
-
+	background-color: lightgrey;
 }
 
 #low-btn {
 	color: white;
-	background-color: blue;
+	background-color: #0B077A;
 }
 
 #low-btn:hover {
-
+	background-color: blue;
 }
 
 #normal-btn {
@@ -187,19 +199,19 @@ h3 {
 }
 
 #normal-btn:hover {
-
+	background-color: #13AD08;
 }
 
 #high-btn {
-	background-color: orange;
+	background-color: #ED6125;
 }
 
 #high-btn:hover {
-
+	background-color: orange;
 }
 
 #critical-btn {
-	background-color: red;
+	background-color: #B70C0C;
 }
 
 #critical-btn:hover {
@@ -207,7 +219,7 @@ h3 {
 }
 
 /*Media Queries*/
-@media screen and (max-width:1100px) {
+@media screen and (max-width: 1100px) {
 	article {
 		margin: 10px 15%;
 		width: 70%;
@@ -219,7 +231,7 @@ h3 {
 	}
 }
 
-@media screen and (max-width:750px) {
+@media screen and (max-width: 750px) {
 	article {
 		margin: 10px 10%;
 		width: 80%;
@@ -231,14 +243,35 @@ h3 {
 	}
 }
 
-@media screen and (max-width:500px) {
-	article {
-		margin: 10px 5%;
-		width: 90%;
-	}
+@media screen and (max-width: 500px) {
 
-	.main-inputs {
-		margin: 10px 5%;
-		width: 90%;
-	}
+.bottom-section {
+	background-color: #E5E5E5
+}
+
+article {
+	margin: 10px 5%;
+	width: 90%;
+}
+
+.main-inputs {
+	margin: 10px 5%;
+	width: 90%;
+	}	
+
+h3 {
+	font-size: 10px;
+	width: 250px;
+	margin: 20px auto 30px auto;
+}
+
+.buttons {
+	color: white;
+	font-size: 10px;
+	margin: 0 0 10px 0;
+}
+
+#todo-card-buttons {
+	width: 300px;
+}
 }
