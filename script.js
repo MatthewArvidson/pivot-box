@@ -88,6 +88,12 @@ function showComplete () {
 }
 
 
+
+$('#none-btn').on('click', showNone);
+$('#low-btn').on('click', showLow);
+$('#normal-btn').on('click', showNormal)
+
+
 function showNone () {
   var none = $('.todo-card');
   none.each(function(){
@@ -97,7 +103,38 @@ function showNone () {
       $(this).hide()
     };
   });
+
 };
+
+  
+}
+
+function showLow () {
+  var low = $('.todo-card');
+  low.each(function() {
+    if (($(this).children('.importance').children('.todo-importance').text()) === 'low') {
+      $(this).show()
+    } else {
+      $(this).hide()
+    }
+
+  });
+}
+
+function showNormal () {
+  var normal = $('.todo-card');
+  normal.each(function() {
+  if (($(this).children('.importance').children('.todo-importance').text()) === 'normal') {
+      $(this).show();
+    } else {
+      $(this).hide()
+    }
+  });
+}
+// 
+//
+
+
 
 function showHigh () {
   var none = $('.todo-card');
