@@ -13,6 +13,9 @@ $('.todo-box').on('click', '#up-vote-button', voteUp);
 $('.todo-box').on('click', '#down-vote-button', voteDown);
 $('.filter-bar').on('keyup', search);
 $('#show-all-btn').on('click', showComplete);
+$('#none-btn').on('click', showNone);
+$('#high-btn').on('click', showHigh);
+$('#critical-btn').on('click', showCritical);
 
 
 //**FUNCTIONS**
@@ -84,21 +87,25 @@ function showComplete () {
   $('.completed-task').show()
 }
 
+
+
 $('#none-btn').on('click', showNone);
 $('#low-btn').on('click', showLow);
 $('#normal-btn').on('click', showNormal)
+
 
 function showNone () {
   var none = $('.todo-card');
   none.each(function(){
     if (($(this).children('.importance').children('.todo-importance').text()) === 'none') {
-   
       $(this).show()
     } else {
       $(this).hide()
-    }
-
+    };
   });
+
+};
+
   
 }
 
@@ -129,7 +136,27 @@ function showNormal () {
 
 
 
-//on page load show non-completed tasks//
+function showHigh () {
+  var none = $('.todo-card');
+  none.each(function(){
+    if (($(this).children('.importance').children('.todo-importance').text()) === 'high') {
+      $(this).show()
+    } else {
+      $(this).hide()
+    };
+  });
+};
+
+function showCritical () {
+  var none = $('.todo-card');
+  none.each(function(){
+    if (($(this).children('.importance').children('.todo-importance').text()) === 'critical') {
+      $(this).show()
+    } else {
+      $(this).hide()
+    };
+  });
+};
 
 
 
@@ -220,5 +247,5 @@ function completeTodo (){
   var parsedObject = find(articleId);
   parsedObject.completeTodo = !parsedObject.completeTodo;
   saveTodo(articleId, parsedObject);
-  
+
 };
