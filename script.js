@@ -12,6 +12,7 @@ $('.todo-box').on('click', '#delete-button', deleteButton);
 $('.todo-box').on('click', '#up-vote-button', voteUp);
 $('.todo-box').on('click', '#down-vote-button', voteDown);
 $('.filter-bar').on('keyup', search);
+$('#show-all-btn').on('click', showComplete);
 
 
 //**FUNCTIONS**
@@ -58,19 +59,18 @@ this.completeTodo = false;
 Card.create = function(card){
   localStorage.setItem(card.id, JSON.stringify(card));
 };
-//Search Event Listener
 
+//Search Event Listener
   function search () {
-	var userInput = $(this).val();
-	$('.todo-card').each(function(index, card){
-		if ($(this).children('.todo-title').text().toLowerCase().includes(userInput.toLowerCase()) || $(this).children('.todo-task').text().toLowerCase().includes(userInput.toLowerCase())) {
-			$(this).show()
-		} else {
-			$(this).hide()
-		}
-	})
+  var userInput = $(this).val();
+  $('.todo-card').each(function(index, card){
+    if ($(this).children('.todo-title').text().toLowerCase().includes(userInput.toLowerCase()) || $(this).children('.todo-task').text().toLowerCase().includes(userInput.toLowerCase())) {
+      $(this).show()
+    } else {
+      $(this).hide()
+    }
+  })
 };
-$('#show-all-btn').on('click', showComplete);
 
 function showComplete () {
   console.log('stuff')
@@ -88,11 +88,15 @@ $('#none-btn').on('click', showNone);
 
 function showNone () {
   var none = $('.todo-card');
-  console.log(none)
   none.each(function(){
-    console.log($(this).children('.importance').children('.todo-importance').text());
+    if (($(this).children('.importance').children('.todo-importance').text()) === 'none') {
+   
+      $(this).show()
+    } else {
+      $(this).hide()
+    }
 
-  })
+  });
   
 }
 // 
