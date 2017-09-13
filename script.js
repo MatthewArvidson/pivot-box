@@ -10,6 +10,7 @@ $('.todo-box').on('keyup', '.todo-task', editTask);
 $('.todo-box').on('click', '#delete-button', deleteButton);
 $('.todo-box').on('click', '#up-vote-button', voteUp);
 $('.todo-box').on('click', '#down-vote-button', voteDown);
+$('.filter-bar').on('keyup', search);
 
 //**FUNCTIONS**
 
@@ -22,23 +23,23 @@ function getTodos() {
 
 //Delete Card Button
 function deleteButton() {
-	$(this).closest('.todo-card').remove();
+  $(this).closest('.todo-card').remove();
   localStorage.removeItem(($(this).closest('.todo-card').attr('id')));
 };
 
 //Create Todo Card
 function createTodoCard (event) {
-	event.preventDefault();
-	var title = $('#title-input').val();
-	var task = $('#task-input').val();
-	var theTodo = new Card({title, task});
-	var saveButton = $('.save-button');
-	$('.bottom-section').prepend(todoCardBlueprint(theTodo));
-	Card.create(theTodo);
+  event.preventDefault();
+  var title = $('#title-input').val();
+  var task = $('#task-input').val();
+  var theTodo = new Card({title, task});
+  var saveButton = $('.save-button');
+  $('.bottom-section').prepend(todoCardBlueprint(theTodo));
+  Card.create(theTodo);
   $('#title-input').val("");
   $('#task-input').val("");
-	$('#title-input').focus();
-	saveButton.attr('disabled', false);
+  $('#title-input').focus();
+  saveButton.attr('disabled', false);
 };
 
 //Constructor Function
@@ -53,11 +54,11 @@ this.completeTodo = false;
 };
 
 Card.create = function(card){
-	localStorage.setItem(card.id, JSON.stringify(card));
+  localStorage.setItem(card.id, JSON.stringify(card));
 };
-
 //Search Event Listener
-$('.search-bar').on('keyup', function(){
+
+  function search () {
 	var userInput = $(this).val();
 	$('.todo-card').each(function(index, card){
 		if ($(this).children('.todo-title').text().toLowerCase().includes(userInput.toLowerCase()) || $(this).children('.todo-task').text().toLowerCase().includes(userInput.toLowerCase())) {
@@ -66,7 +67,15 @@ $('.search-bar').on('keyup', function(){
 			$(this).hide()
 		}
 	})
-});
+};
+
+$('.filter-bar').on()
+// if complete task checked hide card if not show card
+
+
+//on page load show non-completed tasks//
+
+
 
 //Prepend New Card Function
 function todoCardBlueprint(todo) {
