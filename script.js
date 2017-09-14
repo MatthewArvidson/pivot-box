@@ -32,9 +32,9 @@ function getTodos() {
 
 function enableSaveButton() {
   if($('#title-input').val() !== "" && $('#task-input').val() !== "") {
-    $('.save-button').removeAttr('disabled');
+    $('.save-btn').removeAttr('disabled');
   } else {
-    $('.save-button').attr('disabled', true)
+    $('.save-btn').attr('disabled', true)
   }
 };
 
@@ -44,7 +44,7 @@ function createTodoCard (event) {
   var title = $('#title-input').val();
   var task = $('#task-input').val();
   var theTodo = new Card({title, task});
-  var saveButton = $('.save-button');
+  var saveButton = $('.save-btn');
   $('.bottom-section').prepend(todoCardBlueprint(theTodo));
   Card.create(theTodo);
   $('#title-input').val("");
@@ -158,6 +158,18 @@ function showCritical () {
     };
   });
 };
+
+// function showTen () {
+//   var ten = $('.todo-card');
+//   $.each(function() {
+//     if (ten.index >= 10) {
+//       $('.todo-card').show();
+//     } else { 
+//       $('.todo-card').hide();
+//     }
+//   });
+
+// }
 
 
 //Edit Title

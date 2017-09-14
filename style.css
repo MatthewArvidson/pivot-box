@@ -30,7 +30,7 @@ h1, h3, .importance {
 	width: 50%;
 }
 
-.save-button {
+.save-btn {
 	color: #FFF;
 	background-color: #00A79D;
 	border: none;
@@ -38,7 +38,7 @@ h1, h3, .importance {
 	margin-bottom: 30px;
 }
 
-.save-button:hover {
+.save-btn:hover {
 	background-color: #045E55;
 }
 
