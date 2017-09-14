@@ -136,11 +136,11 @@ article {
 }
 
 .completed {
-	color: white;
+	background-color: grey;
 	border: none;
+	color: white;
 	font-size: 20px;
 	margin: 0 0 0 20px;
-	background-color: grey;
 }
 
 .completed:hover {
@@ -148,24 +148,25 @@ article {
 }
 
 h3 {
-	font-size: 20px;
 	display: flex;
-	width: 455px;
+	font-size: 20px;
 	margin: 20px auto 30px auto;
+	width: 455px;
 }
 
 .buttons {
-	color: white;
 	border: none;
+	color: white;
 	font-size: 20px;
 	margin: 0 0 20px 0;
+
 }
 
 #todo-card-buttons {
-	width: 577px;
 	display: flex;
-	margin: auto;
 	justify-content: space-between;
+	margin: auto;
+	width: 577px;
 }
 
 #show-all-btn {
@@ -177,8 +178,8 @@ h3 {
 }
 
 #none-btn {
-	color: white;
 	background-color: grey;
+	color: white;
 }
 
 #none-btn:hover {
@@ -186,8 +187,8 @@ h3 {
 }
 
 #low-btn {
-	color: white;
 	background-color: #0B077A;
+	color: white;
 }
 
 #low-btn:hover {
@@ -241,12 +242,29 @@ h3 {
 		margin: 10px 10%;
 		width: 80%;
 	}
+
+	.completed {
+		background-color: grey;
+		font-size: 10px;
+		margin: 0 0 0 10px;
+	}
+
+	.buttons {
+		color: white;
+		font-size: 10px;
+		margin: 0 0 10px 0;
+	}
+
+	#todo-card-buttons {
+		width: 300px;
+	}
+
 }
 
 @media screen and (max-width: 500px) {
 
 .bottom-section {
-	background-color: #E5E5E5
+	background-color: white;
 }
 
 article {
@@ -257,12 +275,12 @@ article {
 .main-inputs {
 	margin: 10px 5%;
 	width: 90%;
-	}	
+	}
 
 h3 {
 	font-size: 10px;
-	width: 250px;
 	margin: 20px auto 30px auto;
+	width: 250px;
 }
 
 .buttons {
@@ -274,4 +292,23 @@ h3 {
 #todo-card-buttons {
 	width: 300px;
 }
+
+.completed {
+	background-color: grey;
+	font-size: 10px;
+	margin: 0 0 0 10px;
+}
+
+#up-vote-button {
+	height: 25px;
+	margin: 0 10px 0 0;
+	width: 25px;
+}
+
+p.importance {
+	font-size: 10px;
+	margin-right: 0;
+	width: 100%;
+}
+
 }

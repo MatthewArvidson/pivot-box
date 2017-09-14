@@ -5,6 +5,7 @@ $(document).ready(function() {
 });
 
 //**Event Listeners**
+$('#title-input, #task-input').on('keyup', enableSaveButton)
 $('.save-button').on('click', createTodoCard);
 $('.todo-box').on('keyup', '.todo-title', editTitle);
 $('.todo-box').on('keyup', '.todo-task', editTask);
@@ -19,6 +20,7 @@ $('#low-btn').on('click', showLow);
 $('#normal-btn').on('click', showNormal)
 $('#high-btn').on('click', showHigh);
 $('#critical-btn').on('click', showCritical);
+$('.todo-box').on('click', '.completed', completeTodo);
 
 //**FUNCTIONS**
 
@@ -29,10 +31,12 @@ function getTodos() {
   };
 };
 
-//Delete Card Button
-function deleteButton() {
-  $(this).closest('.todo-card').remove();
-  localStorage.removeItem(($(this).closest('.todo-card').attr('id')));
+function enableSaveButton() {
+  if($('#title-input').val() !== "" && $('#task-input').val() !== "") {
+    $('.save-button').removeAttr('disabled');
+  } else {
+    $('.save-button').attr('disabled', true)
+  }
 };
 
 //Create Todo Card
@@ -52,17 +56,41 @@ function createTodoCard (event) {
 
 //Constructor Function
 function Card(content) {
-this.title = content.title;
-this.task = content.task;
-this.id = content.id || Date.now();
-this.importanceIndex = 2;
-this.importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
-this.todoQuality = this.importanceArray[this.importanceIndex];
-this.completeTodo = false;
+  this.title = content.title;
+  this.task = content.task;
+  this.id = content.id || Date.now();
+  this.importanceIndex = 2;
+  this.importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
+  this.todoQuality = this.importanceArray[this.importanceIndex];
+  this.completeTodo = false;
 };
 
 Card.create = function(card){
   localStorage.setItem(card.id, JSON.stringify(card));
+};
+
+//Delete Card Button
+function deleteButton() {
+  $(this).closest('.todo-card').remove();
+  localStorage.removeItem(($(this).closest('.todo-card').attr('id')));
+};
+
+//Prepend New Card Function
+function todoCardBlueprint(todo) {
+  $(".todo-box").prepend(
+    `
+    <article id=${todo.id} class="todo-card">
+    <h3 class="todo-title" contenteditable>${todo.title}</h3><span id="delete-button"></span>
+    <p class="todo-task" contenteditable>${todo.task}</p>
+    <p class="importance"><span id="up-vote-button" class="card-button"></span>
+    <span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.todoQuality}</span>
+    <button class="completed">Completed Task</button></p>
+    </article>
+    `
+  );
+  if (todo.completeTodo) {
+    $(`#${todo.id}`).addClass('completed-task');
+  }
 };
 
 //Search Event Listener
@@ -76,10 +104,6 @@ Card.create = function(card){
     }
   })
 };
-
-function showComplete () {
-  $('.completed-task').show()
-}
 
 function showNone () {
   var none = $('.todo-card');
@@ -136,22 +160,6 @@ function showCritical () {
   });
 };
 
-//Prepend New Card Function
-function todoCardBlueprint(todo) {
-	$(".todo-box").prepend(
-		`
-			<article id=${todo.id} class="todo-card">
-				<h3 class="todo-title" contenteditable>${todo.title}</h3><span id="delete-button"></span>
-				<p class="todo-task" contenteditable>${todo.task}</p>
-				<p class="importance"><span id="up-vote-button" class="card-button"></span>
-				<span id="down-vote-button" class="card-button"></span>Importance: <span class="todo-importance">${todo.todoQuality}</span><button class="completed">Completed Task</button>
-			</article>
-		`
-	);
-  if (todo.completeTodo) {
-    $(`#${todo.id}`).addClass('completed-task');
-  }
-};
 
 //Edit Title
 function editTitle (event) {
@@ -200,21 +208,9 @@ function voteDown(event) {
 };
 
 Card.prototype.getImportance = function() {
-  console.log('importance index in getImportance', this.importanceIndex);
-
   var importanceArray = ['none', 'low', 'normal', 'high', 'critical'];
   return importanceArray[this.importanceIndex];
 };
-
-function saveTodo(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
-}
-
-function find(id) {
-  return JSON.parse(localStorage.getItem(id));
-}
-
-$('.todo-box').on('click', '.completed', completeTodo);
 
 //Toggle Completed Todos
 function completeTodo (){
@@ -223,5 +219,16 @@ function completeTodo (){
   var parsedObject = find(articleId);
   parsedObject.completeTodo = !parsedObject.completeTodo;
   saveTodo(articleId, parsedObject);
-
 };
+
+function find(id) {
+  return JSON.parse(localStorage.getItem(id));
+}
+
+function saveTodo(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+function showComplete () {
+  $('.completed-task').show()
+}
