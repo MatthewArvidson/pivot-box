@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 //**Event Listeners**
 $('#title-input, #task-input').on('keyup', enableSaveButton)
-$('.save-button').on('click', createTodoCard);
+$('.save-btn').on('click', createTodoCard);
 $('.todo-box').on('keyup', '.todo-title', editTitle);
 $('.todo-box').on('keyup', '.todo-task', editTask);
 $('.todo-box').on('click', '#delete-button', deleteButton);
@@ -33,9 +33,9 @@ function getTodos() {
 
 function enableSaveButton() {
   if($('#title-input').val() !== "" && $('#task-input').val() !== "") {
-    $('.save-button').removeAttr('disabled');
+    $('.save-btn').removeAttr('disabled');
   } else {
-    $('.save-button').attr('disabled', true)
+    $('.save-btn').attr('disabled', true)
   }
 };
 
@@ -45,7 +45,7 @@ function createTodoCard (event) {
   var title = $('#title-input').val();
   var task = $('#task-input').val();
   var theTodo = new Card({title, task});
-  var saveButton = $('.save-button');
+  var saveButton = $('.save-btn');
   $('.bottom-section').prepend(todoCardBlueprint(theTodo));
   Card.create(theTodo);
   $('#title-input').val("");
@@ -190,7 +190,7 @@ function voteUp() {
   var parsedObject = find(articleId);
   if (parsedObject.importanceIndex === parsedObject.importanceArray.length - 1) {return;};
   parsedObject.importanceIndex++;
-  parsedObject.importanceIndex = parsedObject.importanceIndex;
+  // parsedObject.importanceIndex = parsedObject.importanceIndex;
   parsedObject.todoQuality = parsedObject.importanceArray[parsedObject.importanceIndex];
   saveTodo(articleId, parsedObject);
   $(this).siblings('.todo-importance').text(parsedObject.importanceArray[parsedObject.importanceIndex]);
@@ -201,7 +201,7 @@ function voteDown(event) {
   var parsedObject = find(articleId);
   if (parsedObject.importanceIndex === 0) {return;};
   parsedObject.importanceIndex--;
-  parsedObject.importanceIndex = parsedObject.importanceIndex;
+  // parsedObject.importanceIndex = parsedObject.importanceIndex;
   parsedObject.todoQuality = parsedObject.importanceArray[parsedObject.importanceIndex];
   saveTodo(articleId, parsedObject);
   $(this).siblings('.todo-importance').text(parsedObject.importanceArray[parsedObject.importanceIndex]);
