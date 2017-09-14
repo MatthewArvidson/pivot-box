@@ -5,22 +5,21 @@ $(document).ready(function() {
 });
 
 //**Event Listeners**
-$('#title-input, #task-input').on('keyup', enableSaveButton)
-$('.save-btn').on('click', createTodoCard);
-$('.todo-box').on('keyup', '.todo-title', editTitle);
-$('.todo-box').on('keyup', '.todo-task', editTask);
-$('.todo-box').on('click', '#delete-button', deleteButton);
-$('.todo-box').on('click', '#up-vote-button', voteUp);
-$('.todo-box').on('click', '#down-vote-button', voteDown);
-$('.filter-bar').on('keyup', search);
-$('#show-all-btn').on('click', showComplete);
-$('#none-btn').on('click', showNone);
-$('#none-btn').on('click', showNone);
-$('#low-btn').on('click', showLow);
-$('#normal-btn').on('click', showNormal)
-$('#high-btn').on('click', showHigh);
 $('#critical-btn').on('click', showCritical);
+$('.filter-bar').on('keyup', search);
+$('#high-btn').on('click', showHigh);
+$('#low-btn').on('click', showLow);
+$('#none-btn').on('click', showNone);
+$('#normal-btn').on('click', showNormal)
+$('.save-button').on('click', createTodoCard);
+$('#show-all-btn').on('click', showComplete);
+$('#title-input, #task-input').on('keyup', enableSaveButton)
 $('.todo-box').on('click', '.completed', completeTodo);
+$('.todo-box').on('click', '#delete-button', deleteButton);
+$('.todo-box').on('click', '#down-vote-button', voteDown);
+$('.todo-box').on('keyup', '.todo-task', editTask);
+$('.todo-box').on('keyup', '.todo-title', editTitle);
+$('.todo-box').on('click', '#up-vote-button', voteUp);
 
 //**FUNCTIONS**
 
